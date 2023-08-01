@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NavigationDrawerPopUpMenu2.Model;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,41 +22,57 @@ namespace NavigationDrawerPopUpMenu2
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
+
             InitializeComponent();
         }
-        
-        private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
-        {
-            ButtonCloseMenu.Visibility = Visibility.Visible;
-            ButtonOpenMenu.Visibility = Visibility.Collapsed;
-        }
 
-        private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
+        private async void  LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            ButtonCloseMenu.Visibility = Visibility.Collapsed;
-            ButtonOpenMenu.Visibility = Visibility.Visible;
-        }
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
 
-        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UserControl usc = null;
-            GridMain.Children.Clear();
-
-            switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                case "ItemHome":
-                    usc = new UserControlHome();
-                    GridMain.Children.Add(usc);
-                    break;
-                case "ItemCreate":
-                    usc = new UserControlCreate();
-                    GridMain.Children.Add(usc);
-                    break;
-                default:
-                    break;
+                MessageBox.Show("Please enter a username and password.");
+                return;
             }
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var user = await db.Users.FirstOrDefaultAsync(x => x.Username == username);
+
+                if (user == null)
+                {
+                    MessageBox.Show("Incorrect password or login");
+                    return;
+                }
+
+                else
+                {
+                    if(HashingModule.CompareWithHash(password, user))
+                    {
+                        ShopWindow shopPage = new ShopWindow();
+                        shopPage.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Incorrect password or login");
+                        return;
+                    }
+
+                }
+            }
+        }
+
+        private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+            Register registerPage = new Register();
+            registerPage.Show();
+            this.Close();
         }
     }
 }

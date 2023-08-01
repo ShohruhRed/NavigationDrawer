@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\GIT\NavigationDrawerPopUpMenu2\NavigationDrawerPopUpMenu2\obj\Debug\
+C:\Users\Shohruh\source\repos\NavigationDrawer\NavigationDrawerPopUpMenu2\obj\Debug\
 NavigationDrawerPopUpMenu2
 none
 false
 DEBUG;TRACE
-D:\GIT\NavigationDrawerPopUpMenu2\NavigationDrawerPopUpMenu2\App.xaml
-3763843133
+C:\Users\Shohruh\source\repos\NavigationDrawer\NavigationDrawerPopUpMenu2\App.xaml
+5-1377481476
 
-11-1032182907
-151125528092
-MainWindow.xaml;UserControlCreate.xaml;UserControlHome.xaml;
+14-1780478831
+242060875789
+MainWindow.xaml;Register.xaml;View\UserControlCreate.xaml;View\UserControlHome.xaml;View\ShopWindow.xaml;
 
-False
+True
 
